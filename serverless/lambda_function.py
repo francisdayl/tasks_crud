@@ -20,6 +20,7 @@ def authenticate(headers):
 
 # Lambda Handler
 def lambda_handler(event, context):
+    print(event)
     logging.debug(event)
     # auth_error = authenticate(event)
     # if auth_error:
