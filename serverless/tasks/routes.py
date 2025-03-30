@@ -1,4 +1,4 @@
-from .models.task import Task
+from tasks.models.task import Task
 
 
 # Create Task

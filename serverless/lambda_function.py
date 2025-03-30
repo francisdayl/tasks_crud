@@ -20,7 +20,7 @@ def authenticate(headers):
 
 # Lambda Handler
 def lambda_handler(event, context):
-    logging.info(event)
+    logging.debug(event)
     # auth_error = authenticate(event)
     # if auth_error:
     #     return auth_error
@@ -30,7 +30,8 @@ def lambda_handler(event, context):
     authorization = ""
     if headers:
         authorization = headers.get("authorization", "")
-    query_string_parameters = event.get("queryStringParameters", {})
+    query_string_parameters = event.get("queryStringParameters", None)
+    query_string_parameters = query_string_parameters if query_string_parameters else {}
     path = "/".join(event.get("path", "").split("/")[2:])
 
     controller_type = path.split("/")[0]
@@ -48,19 +49,21 @@ def lambda_handler(event, context):
             body=body,
             authorization=authorization,
         )
+    else:
+        return {"statusCode": 400, "body": json.dumps({"error": "Invalid Action"})}
     return response.to_json()
 
 
 # lambda_handler(
 #     {
-#         "httpMethod": "POST",
-#         "path": "/api/task",
+#         "httpMethod": "GET",
+#         "path": "/api/tasks",
 #         "authorization": "",
 #         "body": json.dumps(
 #             {
-#                 "title": "Entrevista",
-#                 "description": "a las 3pm",
-#                 "status": "En Progreso",
+#                 # "title": "Entrevista",
+#                 # "description": "a las 3pm",
+#                 # "status": "En Progreso",
 #             }
 #         ),
 #         # "queryStringParameters": {"user_id": "67e78cff11c295e40b557bcd"},

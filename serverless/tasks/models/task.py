@@ -5,7 +5,7 @@ from bson import ObjectId
 from dotenv import load_dotenv
 
 from config.db import connect_db
-from ..enums.status import Status
+from tasks.enums.status import Status
 
 load_dotenv()
 
@@ -16,8 +16,8 @@ collection = db[TASKS_COLLECTION]
 
 def cast_object_id_to_str(obj):
     obj["id"] = str(obj.pop("_id"))
-    obj["created_at"] = obj.pop("created_at").as_datetime().isoformat()
-    obj["updated_at"] = obj.pop("updated_at").as_datetime().isoformat()
+    obj["created_at"] = obj.pop("created_at").isoformat()
+    obj["updated_at"] = obj.pop("updated_at").isoformat()
     if "user_id" in obj:
         obj["user_id"] = str(obj.pop("user_id"))
     return obj
