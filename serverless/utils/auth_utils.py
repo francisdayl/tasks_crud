@@ -1,2 +1,8 @@
+import jwt
+
+
 def get_user_id_from_auth(authorization: str):
-    return "67e791553a9fd66829584088"
+    token = authorization.split(" ")[1]
+    decoded_token = jwt.decode(token, options={"verify_signature": False})
+    user_id = decoded_token.get("id")
+    return user_id

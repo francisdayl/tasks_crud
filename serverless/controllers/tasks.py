@@ -144,4 +144,7 @@ class TaskController:
             return response
         else:
             logging.error(f"Invalid request")
-            return {"statusCode": 400, "body": json.dumps({"error": "Invalid request"})}
+            response = ResponseFormat()
+            response.status_code = 400
+            response.body = {"error": "Invalid request"}
+            return response

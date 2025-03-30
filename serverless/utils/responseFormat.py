@@ -21,3 +21,11 @@ class ResponseFormat:
             "headers": self.headers,
             "isBase64Encoded": self.isBase64Encoded,
         }
+
+    def to_dict(self):
+        return {
+            "statusCode": self.status_code,
+            "body": self.body if self.body else {},
+            "headers": self.headers,
+            "isBase64Encoded": self.isBase64Encoded,
+        }
