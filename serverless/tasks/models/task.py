@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from bson import ObjectId
 
 from dotenv import load_dotenv
@@ -33,8 +33,8 @@ class Task:
             "description": description,
             "status": Status.IN_PROGRESS,
             "user_id": ObjectId(user_id),
-            "created_at": datetime.now(),
-            "updated_at": datetime.now(),
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc),
         }
         result = collection.insert_one(task)
         return str(result.inserted_id)
@@ -64,7 +64,7 @@ class Task:
     def update(task_id: str, data):
         if "id" in data:
             del data["id"]
-        data["updated_at"] = datetime.now()
+        data["updated_at"] = datetime.now(timezone.utc)
         result = collection.update_one({"_id": ObjectId(task_id)}, {"$set": data})
         return result.modified_count
 
