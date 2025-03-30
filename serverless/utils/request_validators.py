@@ -1,5 +1,5 @@
 def validate_query_params(
-    request_params: dict[str, any], expected_params: list[str]
+    request_params: dict[str, any], expected_params: list[str] = []
 ) -> bool:
     if len(request_params) != len(expected_params):
         return False
