@@ -7,3 +7,7 @@ def validate_query_params(
         if param not in request_params:
             return False
     return True
+
+
+def validate_request_body() -> bool:
+    return True

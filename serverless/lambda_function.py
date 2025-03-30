@@ -10,8 +10,7 @@ load_dotenv()
 
 
 # Mock authentication middleware
-def authenticate(event):
-    headers = event.get("headers", {})
+def authenticate(headers):
     auth_token = headers.get("Authorization")
     if not auth_token or auth_token != "Bearer valid_token":
         logging.error("Unauthorized request")
@@ -26,15 +25,21 @@ def lambda_handler(event, context):
     #     return auth_error
 
     http_method = event.get("httpMethod")
+    headers = event.get("headers", {})
     query_string_parameters = event.get("queryStringParameters", {})
-    path = event.get("path", "")[4:]
-    body = json.loads(event["body"])
-    controller_type = event.get("path").split("/")[1]
+    path = "/".join(event.get("path", "").split("/")[2:])
+    controller_type = path.split("/")[0]
+
+    body = event.get("body", {})
+    if body:
+        body = json.loads(body)
+
     if controller_type == "task" or controller_type == "tasks":
-        return TaskController.run_action(
+        response = TaskController.run_action(
             http_method=http_method,
             path=path,
             query_params=query_string_parameters,
             body=body,
         )
+        return response.to_json()
     return {"statusCode": 400, "body": json.dumps({"error": "Invalid request"})}

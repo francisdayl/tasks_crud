@@ -26,12 +26,11 @@ def cast_object_id_to_str(obj):
 
 
 # Create Task
-def create_task(event):
+def create_task(body):
     try:
-        body = json.loads(event["body"])
         task = Task(**body)
         result = collection.insert_one(task.model_dump())
-        return {"statusCode": 201, "body": json.dumps({"id": str(result.inserted_id)})}
+        return {"id": str(result.inserted_id)}
     except Exception as e:
         logging.error(f"Error creating task: {e}")
         return {"statusCode": 400, "body": json.dumps({"error": str(e)})}
@@ -42,8 +41,7 @@ def get_task(task_id):
     task = collection.find_one({"_id": task_id})
     if task:
         task["id"] = str(task.pop("_id"))
-        return {"statusCode": 200, "body": json.dumps(task)}
-    return {"statusCode": 404, "body": json.dumps({"error": "Task not found"})}
+    return task
 
 
 # Read Task
@@ -51,14 +49,12 @@ def get_tasks():
     tasks = list(collection.find())
     if tasks:
         tasks = [cast_object_id_to_str(task) for task in tasks]
-        return {"statusCode": 200, "body": {"data": json.dumps(tasks)}}
-    return {"statusCode": 200, "body": {"data": json.dumps([])}}
+    return tasks
 
 
 # Update Task
-def update_task(event, task_id):
+def update_task(task_id, body):
     try:
-        body = json.loads(event["body"])
         task = Task(**body)
         result = collection.update_one({"_id": task_id}, {"$set": task.model_dump()})
         if result.modified_count:
