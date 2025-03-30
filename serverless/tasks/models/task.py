@@ -15,6 +15,8 @@ collection = db[TASKS_COLLECTION]
 
 
 def cast_object_id_to_str(obj):
+    if not obj:
+        return None
     obj["id"] = str(obj.pop("_id"))
     obj["created_at"] = obj.pop("created_at").isoformat()
     obj["updated_at"] = obj.pop("updated_at").isoformat()
@@ -54,15 +56,17 @@ class Task:
     @staticmethod
     def find_by_id(task_id: str):
         task = collection.find_one({"_id": ObjectId(task_id)})
-        return cast_object_id_to_str(task)
+        if task:
+            task = cast_object_id_to_str(task)
+        return task
 
     @staticmethod
     def update(task_id: str, data):
         if "id" in data:
             del data["id"]
         data["updated_at"] = datetime.now()
-        collection.update_one({"_id": ObjectId(task_id)}, {"$set": data})
-        return Task.find_by_id(task_id)
+        result = collection.update_one({"_id": ObjectId(task_id)}, {"$set": data})
+        return result.modified_count
 
     @staticmethod
     def delete(task_id: str):

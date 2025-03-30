@@ -90,10 +90,11 @@ class TaskController:
                     response.status_code = 200
                     response.body = {"data": data}
                 else:
+                    logging.error("Task not found")
                     response.status_code = 404
                     response.body = {"error": "Task not found"}
             except Exception as e:
-                logging.error("Task not found")
+                logging.error("Error on fetching the data")
                 response.status_code = 500
                 response.body = {"error": "Error on database"}
             return response
@@ -113,9 +114,13 @@ class TaskController:
                 return response
 
             try:
-                data = update_task(query_params["id"], tarea.model_dump())
-                response.status_code = 203
-                response.body = {"data": data}
+                data = update_task(query_params["id"], tarea.model_dump(mode="json"))
+                if data > 0:
+                    response.status_code = 203
+                    response.body = {"message": "Task updated succesfully"}
+                else:
+                    response.status_code = 500
+                    response.body = {"error": "Error while updating task"}
             except Exception as e:
                 logging.error(f"Task not found")
                 response.status_code = 404
