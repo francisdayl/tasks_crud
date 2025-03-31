@@ -313,3 +313,4 @@ cython_debug/
 .pypirc
 
 .DS_Store
+frontend/package-lock.json
