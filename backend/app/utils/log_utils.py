@@ -7,7 +7,7 @@ def log_request(request):
         {
             "headers:": request.headers,
             "path": request.path,
-            "body": request.get_json() if request.is_json else {}
+            "body": request.get_json() if request.is_json else {},
         }
     )
 

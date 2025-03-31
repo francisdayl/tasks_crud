@@ -32,7 +32,7 @@ def register():
         201:
           description: Created
     """
-    
+
     log_request(request)
     data = request.get_json()
 
