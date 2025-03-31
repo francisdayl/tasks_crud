@@ -1,6 +1,15 @@
 import os
 from datetime import timedelta
 from dotenv import load_dotenv
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="{asctime} - {levelname} - {message}",
+    style="{",
+    datefmt="%Y-%m-%d %H:%M",
+)
+
 
 # Load environment variables from .env file
 load_dotenv()
