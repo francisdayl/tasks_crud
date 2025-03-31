@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: BUK_TASKS
+  description: buk_tasks
+  version: 1.0.0
+servers:
+  - url: http://{{host}}
+paths:
+  /api/tasks:
+    get:
+      tags:
+        - default
+      summary: Get Tasks
+      description: description
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/tasks/user:
+    get:
+      tags:
+        - default
+      summary: Get User Tasks
+      description: description
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJpZCI6IjY3ZTc5MTU1M2E5ZmQ2NjgyOTU4NDA4OCJ9.CcVQV5g4GIwVZmGxcTIuMpjDrrw-fIq6Fohrrfk5d4E
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/task:
+    get:
+      tags:
+        - default
+      summary: Get Task
+      description: description
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+          example: '{{id}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - default
+      summary: Create Task
+      description: description
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                title: Entrevista
+                description: a las 3pm
+                status: En Progreso
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJpZCI6IjY3ZTc5MTU1M2E5ZmQ2NjgyOTU4NDA4OCJ9.CcVQV5g4GIwVZmGxcTIuMpjDrrw-fIq6Fohrrfk5d4E
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - default
+      summary: Update Task
+      description: description
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Add your name in the body
+      parameters:
+        - name: authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJpZCI6IjY3ZTc5MTU1M2E5ZmQ2NjgyOTU4NDA4OCJ9.CcVQV5g4GIwVZmGxcTIuMpjDrrw-fIq6Fohrrfk5d4E
+        - name: id
+          in: query
+          schema:
+            type: string
+          example: '{{id}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - default
+      summary: Delete Task
+      description: description
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+          example: '{{id}}'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

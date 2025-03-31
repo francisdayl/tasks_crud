@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: BUK_AUTH
+  description: Description
+  version: 1.0.0
+servers:
+  - url: http://{{base_url}}
+paths:
+  /api/health:
+    get:
+      tags:
+        - default
+      summary: Health
+      description: Description
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/auth/validate:
+    get:
+      tags:
+        - default
+      summary: Validate Token
+      description: Description
+      parameters:
+        - name: Authorization
+          in: header
+          schema:
+            type: string
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDMzNzM4OTAsImlhdCI6MTc0MzM3MDI5MCwic3ViIjoiNjdlOWI1NDhkZmIxYWU0ODk2MzZmNWM1IiwiZW1haWwiOiJtYWlsQG1haWwuY29tIn0.ht0qaLvRuEKI1MKM8vcxQ00dbKebcm0wGnbTWZ4A-M4
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/auth/register:
+    post:
+      tags:
+        - default
+      summary: Register
+      description: Description
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: mail@mail.com
+                password: MyPassword1*
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/auth/login:
+    post:
+      tags:
+        - default
+      summary: Login
+      description: Description
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: mail@mail.com
+                password: MyPassword1*
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
