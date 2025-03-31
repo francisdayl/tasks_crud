@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_pymongo import PyMongo
+from flasgger import Swagger
 from app.config import Config
 import certifi
 
@@ -10,6 +11,7 @@ mongo = PyMongo()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    swagger = Swagger(app)
     app.config.from_object(config_class)
 
     # Initialize extensions

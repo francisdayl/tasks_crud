@@ -47,9 +47,10 @@ paths:
           application/json:
             schema:
               type: object
-              example:
-                email: mail@mail.com
-                password: MyPassword1*
+              properties:
+                email:
+                  type: string
+                  password: string
       responses:
         '200':
           description: Successful response

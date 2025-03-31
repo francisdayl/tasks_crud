@@ -8,8 +8,32 @@ auth_bp = Blueprint("auth", __name__)
 
 @auth_bp.route("/register", methods=["POST"])
 def register():
+    """
+    Register a new user
+    ---
+    tags:
+      - Authentication
+    summary: Register a new user with email and password
+    parameters:
+        - in: body
+          name: user
+          description: The user to create.
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+    responses:
+        201:
+          description: Created
+    """
+    
     log_request(request)
-    """Register a new user."""
     data = request.get_json()
 
     if not data:
@@ -22,7 +46,29 @@ def register():
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    """Authenticate a user and return JWT token."""
+    """
+    Authenticate user and returns the jwt
+    ---
+    tags:
+      - Login
+    parameters:
+        - in: body
+          name: user
+          description: The user to create.
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+    responses:
+        200:
+          description: OK
+    """
     log_request(request)
     data = request.get_json()
 
@@ -39,6 +85,20 @@ def login():
 
 @auth_bp.route("/validate", methods=["GET"])
 def validate():
+    """
+    Validates user token
+    ---
+    tags:
+      - authenticate
+    parameters:
+        - in: header
+          name: authorization
+          type: string
+          required: true
+    responses:
+        200:
+          description: OK
+    """
     log_request(request)
     """Validate a JWT token."""
     auth_header = request.headers.get("Authorization")
